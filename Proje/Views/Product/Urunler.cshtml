@@ -1,0 +1,33 @@
+﻿@model List<Product>
+@{
+    ViewData["Title"] = "Urunler";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4">
+            <div class="rounded-2 border border-2">
+                <h1 class="text text-center">SideBar Maybeeeeeeeeeeeee</h1>
+                <h2>Something else</h2>
+            </div>
+        </div>
+        <div class="col-8">
+            <div class="container-fluid">
+                <div class="row row-cols-auto gy-2">
+                    @foreach (var product in Model)
+                    {
+                        <div class="col">
+                            <div class="card" style="width: 18rem; ">
+                                <img src=@product.imageUrl class="card-img-top" width="250" height="250">
+                                <div class="card-body">
+                                <h5 class="card-title text-center link-underline link-underline-opacity-0">@product.Name</h5>
+                                <p class="card-text text-danger text-center">@product.Price TL</p>
+                                    <a class="stretched-link" asp-controller="Product" asp-action="Detay" asp-route-id="@product.Id"></a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

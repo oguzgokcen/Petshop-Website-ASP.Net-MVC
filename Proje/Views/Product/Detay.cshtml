@@ -1,0 +1,49 @@
+﻿@model Product
+@{
+    ViewData["Title"] = "Detay";
+}
+
+
+<div class="container">
+    <div class="row m-4 ">
+        <div class ="col border border-2">
+        <img class="border-2" src="@Model.imageUrl" height="527" width="527" />
+        </div>
+        <div class="col m-4">
+            <p class="fs-3">@Model.Name</p>
+            <div style="width:200px;">
+                <h2 ><span class="bg-secondary bg-opacity-25 text-primary fw-bold">@Model.Price TL</span></h2>
+            </div>
+            @if (Model.Stock > 0)
+            {
+                <div class="row">
+                    <div class="col"> 
+                        <b>Stock Durumu: </b><span class="fw-bold" style="color:green">Stokta</span> 
+                    </div>
+                </div>
+                <a class="btn btn-primary btn-lg mt-5 " href="#" role="button">
+                    <i class="bi bi-cart2"></i> &nbsp; Sepete Ekle
+                </a>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col">
+                        <b>Stock Durumu: </b><span class="fw-bold" style="color:red">Stok bitti</span>
+                    </div>
+                </div>
+                <a class="btn btn-primary  btn-lg mt-5 disabled" href="#" role="button">
+                    <i class="bi bi-cart2"></i> &nbsp; Sepete Ekle
+                </a>
+            }
+        </div>
+    </div>
+    <div class="container mx-4 mt-2">
+        <div class="row">
+            <div class="rounded-2 border border-2 px-2" >
+            <h2 class="">@Model.Name</h2>&nbsp;
+            <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
