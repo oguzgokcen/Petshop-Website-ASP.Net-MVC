@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Proje.Data;
 using Proje.Models;
-using TurkcellModel.Models;
 
 namespace Proje.Controllers
 {

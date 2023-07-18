@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TurkcellModel.Models;
+using Proje.Data;
+using Proje.Models;
 
-namespace Proje.Models
+namespace Proje.Repositories
 {
     public class ProductRepository
     {

@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
-using TurkcellModel.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Configuration;
+using Proje.Migrations;
+using Proje.Data;
+using IdentityUser = Microsoft.AspNetCore.Identity.IdentityUser;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,8 +19,11 @@ builder.Services.AddAuthentication().AddGoogle(googleOptions =>
     googleOptions.ClientId = builder.Configuration["Authentication:Google:ClientId"];
     googleOptions.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
 });
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<AppDbContext>();
+builder.Services
+    .AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultUI()
+    .AddDefaultTokenProviders();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
