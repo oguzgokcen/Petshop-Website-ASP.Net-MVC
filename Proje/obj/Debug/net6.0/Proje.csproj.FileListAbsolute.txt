@@ -174,7 +174,6 @@ C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensio
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.Features.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Composite.dll
-C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.FileSystemGlobbing.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\refs\Microsoft.Extensions.Hosting.Abstractions.dll
@@ -547,3 +546,6 @@ C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Cr
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
+C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
+C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll

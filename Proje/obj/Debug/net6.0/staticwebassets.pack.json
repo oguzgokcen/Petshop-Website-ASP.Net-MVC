@@ -5,6 +5,14 @@
       "PackagePath": "staticwebassets\\Proje.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\css\\bootstrap.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.css"
+    },
+    {
+      "Id": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\css\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap.min.css"
+    },
+    {
       "Id": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
