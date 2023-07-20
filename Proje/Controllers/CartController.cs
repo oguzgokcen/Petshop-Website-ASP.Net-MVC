@@ -1,30 +1,39 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Iyzipay.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Proje.Models.DisplayModel;
 using Proje.Repositories;
 
 namespace Proje.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
-        private readonly CartRepository _cartRepository;
-        public CartController(CartRepository cartRepository)
+        private readonly ICartRepository _cartRepository;
+        public CartController(ICartRepository cartRepository)
         {
             _cartRepository= cartRepository;
         }
-        public async Task<IActionResult> AddItem(int bookId, int qty = 1, int redirect = 0)
+        public async Task<IActionResult> AddItem(int ProductId, int qty = 1, int redirect = 0)
         {
-            var cartCount = await _cartRepository.AddItem(bookId, qty);
+            var cartCount = await _cartRepository.AddItem(ProductId, qty);
             if (redirect == 0)
-                return Ok(cartCount);
-            return RedirectToAction("GetUserCart");
+            {
+				TempData["success"] = "Ürün Başarıyla Sepete Eklendi";
+				return RedirectToAction("Detay", "Product",new { id=ProductId });
+
+            }
+            return RedirectToAction("UserCart");
+
         }
 
-        public async Task<IActionResult> RemoveItem(int bookId)
+        public async Task<IActionResult> RemoveItem(int ProductId)
         {
-            var cartCount = await _cartRepository.RemoveItem(bookId);
-            return RedirectToAction("GetUserCart");
+            var cartCount = await _cartRepository.RemoveItem(ProductId);
+            return RedirectToAction("UserCart");
         }
-        public async Task<IActionResult> GetUserCart()
+        public async Task<IActionResult> UserCart()
         {
             var cart = await _cartRepository.GetUserCart();
             return View(cart);
@@ -32,16 +41,24 @@ namespace Proje.Controllers
 
         public async Task<IActionResult> GetTotalItemInCart()
         {
-            int cartItem = await _cartRepository.GetCartItemCount();
-            return Ok(cartItem);
+            int cartCount = await _cartRepository.GetCartItemCount();
+            return Ok(cartCount);
         }
 
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> CreateCheckout()
         {
-            bool isCheckedOut = await _cartRepository.DoCheckout();
-            if (!isCheckedOut)
-                throw new Exception("Something happen in server side");
-            return RedirectToAction("Index", "Home");
+            if (!await _cartRepository.CheckUserInformation())
+            {
+                TempData["error"] = "Kullanıcı bilgilerinizi Kaydetmediniz.";
+                return RedirectToAction("SaveUserInformation", "UserInformation");
+            }
+            CheckoutFormParams param = await _cartRepository.CreateCheckout();
+
+            Payment checkoutForm = _cartRepository.CheckoutForm(param);
+            var url = checkoutForm.Status;
+            /*if (isCheckedOut.Status.ToString()==Status.FAILURE.ToString())
+                throw new Exception("Payment Failed in Controller");*/
+            return Redirect(url);
         }
     }
 }

@@ -549,3 +549,4 @@ C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.Extensions.Id
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.UI.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Embedded.dll
 C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll
+C:\Users\oguz-\source\repos\Proje\Proje\bin\Debug\net6.0\Iyzipay.dll

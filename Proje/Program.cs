@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using System.Configuration;
-using Proje.Migrations;
 using Proje.Data;
 using IdentityUser = Microsoft.AspNetCore.Identity.IdentityUser;
+using System.Security.Claims;
+using Proje.Repositories;
+using BookShoppingCartMvcUI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,10 @@ builder.Services
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultUI()
     .AddDefaultTokenProviders();
+builder.Services.Configure<IdentityOptions>(options => options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
+builder.Services.AddTransient<ICartRepository, CartRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+builder.Services.AddTransient<IUserInformationRepository, UserInformationRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -26,25 +26,25 @@
                     <td>@item.Product.Price X @item.Quantity</td>
                     <td>@(item.Product.Price * item.Quantity)</td>
                     <td>
-                        <a class="btn btn-info" asp-controller="Cart" asp-action="AddItem" asp-route-id="@item.Product.Id">+</a>
-                        <a class="btn btn-info" asp-controller="Cart" asp-action="RemoveItem" asp-route-id="@item.Product.Id">-</a>
+                        <a class="btn btn-info" href="/Cart/AddItem?ProductId=@item.ProductId&&redirect=1">+</a>
+                        <a class="btn btn-info" href="/cart/removeitem?ProductId=@item.ProductId">-</a>
                     </td>
                 </tr>
             }
         </table>
 
         <div class="my-2">
-            <h5>Total(INR): </h5>
+            <h5>Total(TRY): </h5>
             @(Model.CartDetails.Select(item => item.Product.Price * item.Quantity).Sum())
         </div>
 
         <div class="my-2">
-            <a class="btn btn-primary" href="/Cart/Checkout">Checkout</a>
+            <a class="btn btn-primary" href="/Cart/CreateCheckout">Ödeme Yap</a>
         </div>
 
     }
     else
     {
-        <h5>Cart is empty</h5>
+        <h5>Henüz Sepetiniz Boş</h5>
     }
 </div>

@@ -21,9 +21,10 @@
                         <b>Stock Durumu: </b><span class="fw-bold" style="color:green">Stokta</span> 
                     </div>
                 </div>
-                <a class="btn btn-primary btn-lg mt-5 " onclick="add(@Model.Id)" role="button">
+                <a class="btn btn-primary btn-lg mt-5 " href="/Cart/AddItem?ProductId=@Model.Id">
                     <i class="bi bi-cart2"></i> &nbsp; Sepete Ekle
                 </a>
+                <partial name="_Notification" />
             }
             else
             {
@@ -32,7 +33,7 @@
                         <b>Stock Durumu: </b><span class="fw-bold" style="color:red">Stok bitti</span>
                     </div>
                 </div>
-                <a class="btn btn-primary  btn-lg mt-5 disabled" href="#" role="button" onclick="add(@Model.Id)">
+                <a class="btn btn-primary  btn-lg mt-5 disabled" href="/Cart/AddItem?ProductId=@Model.Id">
                     <i class="bi bi-cart2"></i> &nbsp; Sepete Ekle
                 </a>
             }
@@ -47,29 +48,3 @@
         </div>
     </div>
 </div>
-@section Scripts{
-    <script>
-        async function add(bookId) {
-            var usernameEl = document.getElementById("username");
-            if (usernameEl == null) {
-                window.location.href = "/Identity/Account/Login";
-                //var username=usernameEl.innerText;
-                //  if(username.length<1){
-                //      window.location.href="/Identity/Account/Login";
-                //  }
-            }
-            try {
-                var response = await fetch(`/Cart/AddItem?bookId=${bookId}`);
-                if (response.status == 200) {
-                    var result = await response.json();
-                    var cartCountEl = document.getElementById("cartCount");
-                    cartCountEl.innerHTML = result;
-                    window.location.href = "#cartCount";
-                }
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
-    </script>
-}

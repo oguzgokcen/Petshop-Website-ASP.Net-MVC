@@ -1,19 +1,33 @@
-﻿@model List<Product>
+﻿@using Proje.Models.DisplayModel;
+@model ProductDisplayModel
 @{
     ViewData["Title"] = "Urunler";
 }
+<div class="my-2">
+    <form asp-controller="Product" asp-action="Urunler" class="row row-cols-lg-auto g-3 align-items-center">
+        <div class="col12">
+            <label class="visually-hidden" for="sterm">Ürün Ara</label>
+            <div class="input-group-text">
+                <input type="text" class="form-control" name="sterm" placeholder="Ürün Ara" asp-for="@Model.sterm">
+            </div>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="/Product/Urunler" class="btn btn-dark">Reset</a>
+        </div>
+    </form>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-4">
             <div class="rounded-2 border border-2">
-                <h1 class="text text-center">SideBar Maybeeeeeeeeeeeee</h1>
-                <h2>Something else</h2>
+                
             </div>
         </div>
         <div class="col-8">
             <div class="container-fluid">
                 <div class="row row-cols-auto gy-2">
-                    @foreach (var product in Model)
+                    @foreach (var product in Model.Products)
                     {
                         <div class="col">
                             <div class="card" style="width: 18rem; height:25rem ">
