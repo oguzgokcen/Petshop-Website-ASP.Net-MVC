@@ -12,7 +12,7 @@ namespace Proje.Repositories
             _db = db;
         }
 
-        public async Task<IEnumerable<Product>> GetProducts(string sterm ="")
+        public async Task<IEnumerable<Product>> GetProducts(decimal maxprice,bool stock, string sterm = "")
         {
             if (string.IsNullOrEmpty(sterm))
                 sterm = "";
@@ -22,7 +22,9 @@ namespace Proje.Repositories
                  where string.IsNullOrWhiteSpace(sterm) ||
                  (product != null && product.Name.ToLower().Contains(sterm))
                  select product).ToListAsync();
-
+            products = products.Where(x =>x.Price<=maxprice).ToList();
+            if (stock != false)
+                products = products.Where(x =>x.Stock == stock).ToList();
             return products;
         }
         public async Task<Product> Find(int id)

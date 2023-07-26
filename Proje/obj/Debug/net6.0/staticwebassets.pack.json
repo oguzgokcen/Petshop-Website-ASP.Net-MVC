@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\greentick.png",
+      "PackagePath": "staticwebassets\\greentick.png"
+    },
+    {
       "Id": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

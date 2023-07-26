@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Ürün Detayı";
+}
+@model Order
+<div class="container-auto mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-warning shadow p-3 mb-5 bg-body-tertiary rounded">
+                <div class="card-body text-center bg-warning-subtle" >
+                    <h2 class="mt-3">Siparişi İptal Etmek İstiyor Musunuz?</h2>
+                    <p>Sipariş Bilgileri</p>
+                    <hr />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ürün Adı</th>
+                                <th>Ürün Resmi</th>
+                                <th>Ürün Tipi</th>
+                                <th>Adet</th>
+                                <th>Fiyat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetail)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>
+                                        <img src="@item.Product.imageUrl" style="width:80px;height:100px" />
+                                    </td>
+                                    <td>@item.Product.Type</td>
+                                    <td>@item.Product.Price X @item.Quantity</td>
+                                    <td>@(item.Product.Price * item.Quantity)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer align-">
+                    <a class="btn btn-primary" asp-controller="UserInformation" asp-action="UserOrders">Geri</a>
+                    <a class="btn btn-danger" asp-controller="UserInformation" asp-action="CancelOrder" asp-route-id="@Model.Id">İptal Et</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

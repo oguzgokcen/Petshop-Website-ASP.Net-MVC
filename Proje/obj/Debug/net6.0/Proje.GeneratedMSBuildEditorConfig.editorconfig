@@ -180,10 +180,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxVc2VyQ2FydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/oguz-/source/repos/Proje/Proje/Views/Cart/_CheckoutPopup.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FydFxfQ2hlY2tvdXRQb3B1cC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/oguz-/source/repos/Proje/Proje/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -218,6 +214,18 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/oguz-/source/repos/Proje/Proje/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oguz-/source/repos/Proje/Proje/Views/UserInformation/CancelConfirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckluZm9ybWF0aW9uXENhbmNlbENvbmZpcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oguz-/source/repos/Proje/Proje/Views/UserInformation/OrderConfirm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckluZm9ybWF0aW9uXE9yZGVyQ29uZmlybS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oguz-/source/repos/Proje/Proje/Views/UserInformation/OrderDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlckluZm9ybWF0aW9uXE9yZGVyRGV0YWlsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/oguz-/source/repos/Proje/Proje/Views/UserInformation/SaveUserInformation.cshtml]

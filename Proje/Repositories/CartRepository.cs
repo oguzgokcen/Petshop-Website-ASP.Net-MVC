@@ -15,12 +15,13 @@ namespace Proje.Repositories
         private readonly AppDbContext _db;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IHttpContextAccessor _httpcontextAccessor;
-
-        public CartRepository(AppDbContext appDbContext, UserManager<IdentityUser> userManager, IHttpContextAccessor contextAccessor)
+        private readonly IConfiguration _config;
+        public CartRepository(AppDbContext appDbContext, UserManager<IdentityUser> userManager, IHttpContextAccessor contextAccessor, IConfiguration config)
         {
             _db = appDbContext;
             _userManager = userManager;
             _httpcontextAccessor = contextAccessor;
+            _config = config;
         }
         public async Task<int> AddItem(int ProductId, int qty)
         {
@@ -129,7 +130,7 @@ namespace Proje.Repositories
             return data.Count;
         }
 
-        public async Task<bool> DoCheckout()
+        public async Task<bool> DoCheckout(String tokenId)
         {
             using var transaction = _db.Database.BeginTransaction();
             try
@@ -150,7 +151,8 @@ namespace Proje.Repositories
                 {
                     UserId = userId,
                     CreateDate = DateTime.UtcNow,
-                    OrderStatusId = 1//pending
+                    OrderStatusId = 1,//işleme Alınıyor
+                    tokenId = tokenId
                 };
                 _db.Orders.Add(order);
                 _db.SaveChanges();
@@ -202,41 +204,48 @@ namespace Proje.Repositories
         public async Task<CheckoutFormParams> CreateCheckout()
         {
             var userCart = await GetUserCart();
+            var decimal_comma = userCart.CartDetails.Sum(cart => cart.UnitPrice * cart.Quantity).ToString().Replace(",", ".");
             return new CheckoutFormParams()
             {
                 userID = GetUserId(),
                 userInformation = await GetUserInformation(),
                 cart = userCart,
-                price = userCart.CartDetails.Sum(cart => cart.UnitPrice * cart.Quantity).ToString()
+                price = decimal_comma
             };
         }
-        public Payment CheckoutForm(CheckoutFormParams param)
+        /*public Payment CheckoutForm(CheckoutFormParams param)
         {
             var price = "1.2";
             var userInformation = param.userInformation;
             var userCart = param.cart;
             var userId = param.userID;
+            Options options = new Options()
+            {
+                ApiKey = _config["Auth:Iyzico:Api"],
+                SecretKey = _config["Auth:Iyzico:SecretKey"],
+                BaseUrl = "https://sandbox-api.iyzipay.com"
+            };
             CreatePaymentRequest request = new CreatePaymentRequest();
             request.Locale = Locale.TR.ToString();
+            request.ConversationId = "123456789";
             request.Price = price;
             request.PaidPrice = price;
             request.Currency = Currency.TRY.ToString();
+            request.Installment = 1;
             request.PaymentChannel = PaymentChannel.WEB.ToString();
             request.PaymentGroup = PaymentGroup.PRODUCT.ToString();
+            request.CallbackUrl = "https://localhost:44340/UserInformation/UserOrders";
+
             PaymentCard paymentCard = new PaymentCard();
-            paymentCard.CardHolderName = "ABC";
+            paymentCard.CardHolderName = "John Doe";
             paymentCard.CardNumber = "5528790000000008";
             paymentCard.ExpireMonth = "12";
             paymentCard.ExpireYear = "2030";
             paymentCard.Cvc = "123";
             paymentCard.RegisterCard = 0;
             request.PaymentCard = paymentCard;
-            /*request.EnabledInstallments = new List<int>()
-                {
-                    1,2
-                };*/
-            request.CallbackUrl = "https://localhost:44340/UserInformation/UserOrders";
-            var buyer = new Buyer()
+
+            request.Buyer = new Buyer()
             {
                 Id = userId,
                 Name = userInformation.name.ToString(),
@@ -252,7 +261,92 @@ namespace Proje.Repositories
                 RegistrationAddress = userInformation.adress.ToString(),
                 ZipCode = "35410"
             };
-            request.Buyer = buyer;
+
+
+            var shippingAdress = new Address()
+            {
+                ContactName = userInformation.name.ToString(),
+                City = userInformation.city.ToString(),
+                Country = userInformation.country.ToString(),
+                Description = userInformation.adress.ToString()
+            };
+            request.ShippingAddress = shippingAdress;
+
+            var billingAdress = new Address()
+            {
+                ContactName = userInformation.name.ToString(),
+                City = userInformation.city.ToString(),
+                Country = userInformation.country.ToString(),
+                Description = userInformation.adress.ToString()
+            };
+            request.BillingAddress = billingAdress;
+
+            var basketItems = new List<BasketItem>()
+                {
+                    new BasketItem()
+                    {
+                        Id = "BI102 ", //userCart.Id.ToString(),
+                        Name = "PetShop Ürünü",
+                        ItemType = BasketItemType.PHYSICAL.ToString(),
+                        Category1 = "PetShop Ürünü",
+                        Price = price,
+                        Category2 = "Hayvan Ürünü",
+                    }
+                };
+            request.BasketItems = basketItems;
+
+            Payment checkoutFormInitialize = Payment.Create(request, options);
+            return checkoutFormInitialize;
+        }
+        public InstallmentInfo deneme()
+        {
+            Options options = new Options()
+            {
+                ApiKey = _config["Auth:Iyzico:Api"],
+                SecretKey = _config["Auth:Iyzico:SecretKey"],
+                BaseUrl = "https://sandbox-api.iyzipay.com"
+            };
+            RetrieveInstallmentInfoRequest request = new RetrieveInstallmentInfoRequest();
+            request.Locale = Locale.TR.ToString();
+            request.ConversationId = "123456788";
+            request.BinNumber = "554960";
+            request.Price = "100";
+
+            InstallmentInfo installmentInfo = InstallmentInfo.Retrieve(request, options);
+            return installmentInfo;
+        }*/
+        public CheckoutFormInitialize paymentForm(CheckoutFormParams param)
+        {
+            Options options = new Options()
+            {
+                ApiKey = _config["Auth:Iyzico:Api"],
+                SecretKey = _config["Auth:Iyzico:SecretKey"],
+                BaseUrl = "https://sandbox-api.iyzipay.com"
+            };
+            var price = param.price;
+            var userInformation = param.userInformation;
+            var userCart = param.cart;
+            var userId = param.userID;
+            CreateCheckoutFormInitializeRequest request = new CreateCheckoutFormInitializeRequest();
+            request.Locale = Locale.TR.ToString();
+            request.Price = price;
+            request.PaidPrice = price;
+            request.Currency = Currency.TRY.ToString();
+            request.EnabledInstallments = new List<int>(){1};
+            request.Buyer = new Buyer()
+            {
+                Id = userId,
+                Name = userInformation.name.ToString(),
+                Surname = userInformation.surname.ToString(),
+                GsmNumber = userInformation.phone.ToString(),
+                Email = userInformation.email.ToString(),
+                IdentityNumber = userInformation.tckn.ToString(),
+                City = userInformation.city.ToString(),
+                Country = userInformation.country.ToString(),
+                Ip = "19.18.17.112",
+                RegistrationAddress = userInformation.adress.ToString()
+            };
+
             var shippingAdress = new Address()
             {
                 ContactName = userInformation.name.ToString(),
@@ -277,18 +371,12 @@ namespace Proje.Repositories
                         Name = "PetShop Ürünü",
                         ItemType = BasketItemType.PHYSICAL.ToString(),
                         Category1 = "PetShop Ürünü",
-                        Price = price,
-                        Category2 = "Hayvan Ürünü",
+                        Price = price
                     }
                 };
+            request.CallbackUrl = "https://localhost:44340/UserInformation/OrderConfirm";
             request.BasketItems = basketItems;
-            Options options = new Options()
-            {
-                ApiKey = "sandbox-NnVHlqFE3pTjMHNtjNuGCwCYc865eACz",
-                SecretKey = "CWn9K9kdXKsoWYuwMA8DUcMdSgL9HrQs",
-                BaseUrl = "https://sandbox-api.iyzipay.com"
-            };
-            Payment checkoutFormInitialize = Payment.Create(request, options);
+            CheckoutFormInitialize checkoutFormInitialize = CheckoutFormInitialize.Create(request, options);
             return checkoutFormInitialize;
         }
     }

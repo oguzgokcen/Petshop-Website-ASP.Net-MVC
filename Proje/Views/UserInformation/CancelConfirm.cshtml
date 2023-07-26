@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Sipariş İptal Edildi";
+}
+@model Order
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-success shadow p-3 mb-5 bg-body-tertiary rounded">
+                <div class="card-body text-center bg-warning-subtle" style"">
+                    <img src="~/greentick.png" alt="Tick Logo" class="img-fluid" style="width: 100px;">
+                    <h2 class="mt-3">Sipariş Başarıyla İptal Edildi</h2>
+                    <p>Siparişiniz iptal edildi ve ücret iadesi yapıldı! Sipariş Detayları :</p>
+                    <hr />
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Ürün Adı</th>
+                                <th>Ürün Resmi</th>
+                                <th>Ürün Tipi</th>
+                                <th>Adet</th>
+                                <th>Fiyat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.OrderDetail)
+                            {
+                                <tr>
+                                    <td>@item.Product.Name</td>
+                                    <td>
+                                        <img src="@item.Product.imageUrl" style="width:80px;height:100px" />
+                                    </td>
+                                    <td>@item.Product.Type</td>
+                                    <td>@item.Product.Price X @item.Quantity</td>
+                                    <td>@(item.Product.Price * item.Quantity) </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer align-end">
+                    <a class="btn btn-primary" asp-controller="UserInformation" asp-action="UserOrders">Geri</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

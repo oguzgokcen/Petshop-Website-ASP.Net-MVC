@@ -3,31 +3,52 @@
 @{
     ViewData["Title"] = "Urunler";
 }
-<div class="my-2">
-    <form asp-controller="Product" asp-action="Urunler" class="row row-cols-lg-auto g-3 align-items-center">
-        <div class="col12">
-            <label class="visually-hidden" for="sterm">Ürün Ara</label>
-            <div class="input-group-text">
-                <input type="text" class="form-control" name="sterm" placeholder="Ürün Ara" asp-for="@Model.sterm">
-            </div>
-        </div>
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a href="/Product/Urunler" class="btn btn-dark">Reset</a>
-        </div>
-    </form>
-</div>
-<div class="container-fluid">
+<div class="container-fluid mt-3">
     <div class="row">
         <div class="col-4">
             <div class="rounded-2 border border-2">
-                
+                <form asp-controller="Product" asp-action="Urunler">
+                    <div class="col12">
+                        <label class="visually-hidden" for="sterm">Ürün Ara</label>
+                        <div class="input-group-text">
+                            <input type="text" class="form-control" name="sterm" placeholder="Ürün Ara" asp-for="@Model.sterm">
+                        </div>
+                    </div>
+                    <div class="container mt-2">
+                        <div class="form-group">
+                            <label for="rangeSlider">Max fiyat:</label>
+                            <input type="range" class="form-range"  id="rangeSlider" min="0" max="1000" step="1" oninput="updateRange(this.value)" />
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <input type="number" name="maxprice" class="form-control w-10" id="rangeValue" min="0" max="1000" step="1" onchange="updateSlider(this.value)" asp-for="@Model.maxPrice" />
+                            </div>
+                            <div class="col-auto">
+                                TL
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="stock" type="checkbox" id="flexCheckDefault" asp-for="@Model.stock">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Sadece Stokta Olanlar
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2 mb-2 mx-2">
+                        <button type="submit" class="btn btn-primary">Arama Yap</button>
+                        <a href="/Product/Urunler" class="btn btn-dark">Sıfırla</a>
+                    </div>
+                </form> 
             </div>
         </div>
         <div class="col-8">
             <div class="container-fluid">
                 <div class="row row-cols-auto gy-2">
-                    @foreach (var product in Model.Products)
+                    @if (Model.Products.Count() == 0)
+                    {
+                        <h2> Ürün Bulunamadı</h2>
+                    }else{
+                    foreach (var product in Model.Products)
                     {
                         <div class="col">
                             <div class="card" style="width: 18rem; height:25rem ">
@@ -40,8 +61,18 @@
                             </div>
                         </div>
                     }
+                    }
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function updateRange(value) {
+        document.getElementById('rangeValue').value = value;
+    }
+
+    function updateSlider(value) {
+        document.getElementById('rangeSlider').value = value;
+    }
+</script>

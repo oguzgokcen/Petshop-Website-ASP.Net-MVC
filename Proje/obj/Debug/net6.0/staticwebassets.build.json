@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XPkL1O/ogt51S+vrU53u+O/WTC842CnR+uWFSl8Pqvc=",
+  "Hash": "kC6K0UAo27EHrGT0JawbNzigqwBABJaVYVI35wQopqE=",
   "Source": "Proje",
   "BasePath": "_content/Proje",
   "Mode": "Default",
@@ -1137,6 +1137,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\greentick.png",
+      "SourceId": "Proje",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\",
+      "BasePath": "_content/Proje",
+      "RelativePath": "greentick.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\greentick.png"
     },
     {
       "Identity": "C:\\Users\\oguz-\\source\\repos\\Proje\\Proje\\wwwroot\\js\\site.js",

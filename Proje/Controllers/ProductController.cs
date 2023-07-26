@@ -14,13 +14,15 @@ namespace Proje.Controllers
             _productRepository = productRepository;
 
         }
-        public async Task< IActionResult> Urunler(string sterm="")
+        public async Task< IActionResult> Urunler( bool stock, decimal maxPrice = 1000, string sterm = "")
         {
-            IEnumerable<Product> products = await _productRepository.GetProducts(sterm);
+            IEnumerable<Product> products = await _productRepository.GetProducts(maxPrice, stock,sterm);
             ProductDisplayModel displayModel = new ProductDisplayModel
             {
                 Products = products,
-                sterm = sterm
+                sterm = sterm,
+                maxPrice = maxPrice,
+                stock = stock
             };
             return View(displayModel);
         }

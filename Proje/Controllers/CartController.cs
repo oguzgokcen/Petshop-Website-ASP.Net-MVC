@@ -47,17 +47,16 @@ namespace Proje.Controllers
 
         public async Task<IActionResult> CreateCheckout()
         {
+            // Kullanıcı bilgisi yoksa : 
             if (!await _cartRepository.CheckUserInformation())
             {
                 TempData["error"] = "Kullanıcı bilgilerinizi Kaydetmediniz.";
                 return RedirectToAction("SaveUserInformation", "UserInformation");
             }
             CheckoutFormParams param = await _cartRepository.CreateCheckout();
-
-            Payment checkoutForm = _cartRepository.CheckoutForm(param);
-            var url = checkoutForm.Status;
-            /*if (isCheckedOut.Status.ToString()==Status.FAILURE.ToString())
-                throw new Exception("Payment Failed in Controller");*/
+            CheckoutFormInitialize checkoutForm = _cartRepository.paymentForm(param);
+            var url = checkoutForm.PaymentPageUrl;
+            await _cartRepository.DoCheckout(checkoutForm.Token);
             return Redirect(url);
         }
     }
